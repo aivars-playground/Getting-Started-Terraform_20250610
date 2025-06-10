@@ -37,3 +37,8 @@ terraform apply m3.tfplan
 cd globo_web_app
 terraform destroy
 ```
+
+*interactive REPL
+```shell
+terraform console
+```

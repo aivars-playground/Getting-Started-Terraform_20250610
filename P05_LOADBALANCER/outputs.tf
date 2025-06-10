@@ -12,13 +12,3 @@ output "aws_lb_dns" {
   value       = "http://${aws_lb.nginx.dns_name}"
   description = "Public DNS for EC2 instance - 1"
 }
-
-output "available_aws_zones" {
-  value       = data.aws_availability_zones.available.names
-  description = "Available AWS zones"
-}
-
-output "region" {
-  value       = var.aws_region
-  description = "aws region"
-}

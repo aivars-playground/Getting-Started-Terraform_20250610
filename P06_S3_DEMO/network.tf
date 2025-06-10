@@ -1,7 +1,14 @@
-# DATA #
+##################################################################################
+# DATA
+##################################################################################
+
 data "aws_availability_zones" "available" {
   state = "available"
 }
+
+##################################################################################
+# RESOURCES
+##################################################################################
 
 # NETWORKING #
 resource "aws_vpc" "app" {
@@ -21,9 +28,7 @@ resource "aws_subnet" "public_subnet1" {
   cidr_block              = var.vpc_public_subnets_cidr_block[0]
   vpc_id                  = aws_vpc.app.id
   map_public_ip_on_launch = var.map_public_ip_on_launch
-
-  #picks first available zone
-  availability_zone = data.aws_availability_zones.available.names[0]
+  availability_zone       = data.aws_availability_zones.available.names[0]
 
   tags = local.common_tags
 }
@@ -32,9 +37,7 @@ resource "aws_subnet" "public_subnet2" {
   cidr_block              = var.vpc_public_subnets_cidr_block[1]
   vpc_id                  = aws_vpc.app.id
   map_public_ip_on_launch = var.map_public_ip_on_launch
-
-  #picks second available zone
-  availability_zone = data.aws_availability_zones.available.names[1]
+  availability_zone       = data.aws_availability_zones.available.names[1]
 
   tags = local.common_tags
 }
@@ -51,18 +54,17 @@ resource "aws_route_table" "app" {
   tags = local.common_tags
 }
 
-resource "aws_route_table_association" "app_public_subnet1" {
+resource "aws_route_table_association" "app_subnet1" {
   subnet_id      = aws_subnet.public_subnet1.id
   route_table_id = aws_route_table.app.id
 }
 
-resource "aws_route_table_association" "app_public_subnet2" {
+resource "aws_route_table_association" "app_subnet2" {
   subnet_id      = aws_subnet.public_subnet2.id
   route_table_id = aws_route_table.app.id
 }
 
 # SECURITY GROUPS #
-
 # Nginx security group 
 resource "aws_security_group" "nginx_sg" {
   name   = "nginx_sg"
@@ -73,7 +75,7 @@ resource "aws_security_group" "nginx_sg" {
     from_port   = 80
     to_port     = 80
     protocol    = "tcp"
-    cidr_blocks = [var.vpc_cidr_block] #allow traffic only from within VPC
+    cidr_blocks = [var.vpc_cidr_block]
   }
 
   # outbound internet access
@@ -87,8 +89,6 @@ resource "aws_security_group" "nginx_sg" {
   tags = local.common_tags
 }
 
-
-# loadbalancer security group
 resource "aws_security_group" "alb_sg" {
   name   = "nginx_alb_sg"
   vpc_id = aws_vpc.app.id

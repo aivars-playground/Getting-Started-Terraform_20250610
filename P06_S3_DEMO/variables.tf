@@ -1,9 +1,8 @@
 variable "aws_region" {
   type        = string
-  description = "AWS region for deployment"
+  description = "Region for AWS Resources"
+  default     = "us-east-1"
 }
-
-## Add these after the first challenge
 
 variable "enable_dns_hostnames" {
   type        = bool
@@ -19,7 +18,7 @@ variable "vpc_cidr_block" {
 
 variable "vpc_public_subnets_cidr_block" {
   type        = list(string)
-  description = "CIDR Block for Subnet 1 in VPC"
+  description = "CIDR Block for Public Subnets in VPC"
   default     = ["10.0.0.0/24", "10.0.1.0/24"]
 }
 
@@ -31,11 +30,9 @@ variable "map_public_ip_on_launch" {
 
 variable "instance_type" {
   type        = string
-  description = "Type for EC2 Instnace"
-  default     = "t3.medium"
+  description = "Type for EC2 Instance"
+  default     = "t3.micro"
 }
-
-## Add these after the local value discussion
 
 variable "company" {
   type        = string

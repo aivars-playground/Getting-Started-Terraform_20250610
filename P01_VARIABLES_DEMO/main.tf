@@ -14,8 +14,9 @@ terraform {
 # PROVIDERS
 ##################################################################################
 
+#keys are in ~/.aws/credentials
 provider "aws" {
-  region = "us-east-1"
+  region = var.aws_deployment_region
 }
 
 ##################################################################################
@@ -89,7 +90,7 @@ resource "aws_security_group" "nginx_sg" {
 # INSTANCES #
 resource "aws_instance" "nginx1" {
   ami                    = nonsensitive(data.aws_ssm_parameter.amzn2_linux.value)
-  instance_type          = "t3.micro"
+  instance_type          = var.nginx1_instance_type
   subnet_id              = aws_subnet.public_subnet1.id
   vpc_security_group_ids = [aws_security_group.nginx_sg.id]
 

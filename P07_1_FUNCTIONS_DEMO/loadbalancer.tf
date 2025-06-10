@@ -48,7 +48,7 @@ resource "aws_lb_listener" "nginx" {
 
 # aws_lb_target_group_attachment
 resource "aws_lb_target_group_attachment" "nginx_attachments" {
-  count = var.vpc_public_subnet_count
+  count = var.instance_count
   target_group_arn = aws_lb_target_group.nginx.arn
   target_id        = aws_instance.nginx_instances[count.index].id
   port             = 80

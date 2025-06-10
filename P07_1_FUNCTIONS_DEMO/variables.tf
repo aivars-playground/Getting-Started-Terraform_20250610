@@ -29,6 +29,13 @@ variable "map_public_ip_on_launch" {
   default     = true
 }
 
+
+variable "instance_count" {
+  type = number
+  default = 2
+  description = "number of EC2 Instances"
+}
+
 variable "instance_type" {
   type        = string
   description = "Type for EC2 Instance"

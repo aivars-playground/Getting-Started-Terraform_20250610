@@ -28,3 +28,14 @@ output "cidrhost_newbits_netnum" {
   value = cidrhost(cidrsubnet("10.0.0.0/8", 8, 1),1024)
   description = "cidrhost(cidrsubnet(10.0.0.0/8, 8, 1),3)"
 }
+
+# does not wotk if tag is missing - The given key does not identify an element in this collection value.
+# output "tagbyname" {
+#   value = local.common_tags["tagname"]
+#   description = "missing tag"
+# }
+
+output "tag_loolup" {
+  value = lookup(local.common_tags, "tagname", "this tag is missing")
+  description = "missing tag lookup"
+}

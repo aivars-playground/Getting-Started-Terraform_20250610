@@ -12,7 +12,7 @@ resource "aws_instance" "nginx" {
   iam_instance_profile   = module.web_app_s3.instance_profile.name
   depends_on             = [module.web_app_s3]
 
-  user_data = templatefile("${path.module}/templates/startup_script.tpl", {
+  user_data = templatefile("instance_startup_script.tpl", {
     s3_bucket_name = module.web_app_s3.web_bucket.id
   })
 

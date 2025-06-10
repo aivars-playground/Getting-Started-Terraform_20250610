@@ -1,6 +1,6 @@
 variable "aws_region" {
   type        = string
-  description = "Region for AWS Resources"
+  description = "AWS region to use for resources."
   default     = "us-east-1"
 }
 
@@ -16,11 +16,16 @@ variable "vpc_cidr_block" {
   default     = "10.0.0.0/16"
 }
 
-
 variable "vpc_public_subnet_count" {
-  type = number
-  default = 2
-  description = "number of public subnets"
+  type        = number
+  description = "Number of public subnets to create."
+  default     = 2
+}
+
+variable "vpc_public_subnets_cidr_block" {
+  type        = list(string)
+  description = "CIDR Block for Public Subnets in VPC"
+  default     = ["10.0.0.0/24", "10.0.1.0/24"]
 }
 
 variable "map_public_ip_on_launch" {
@@ -29,17 +34,16 @@ variable "map_public_ip_on_launch" {
   default     = true
 }
 
-
-variable "instance_count" {
-  type = number
-  default = 2
-  description = "number of EC2 Instances"
-}
-
 variable "instance_type" {
   type        = string
   description = "Type for EC2 Instance"
   default     = "t3.micro"
+}
+
+variable "instance_count" {
+  type        = number
+  description = "Number of instances to create"
+  default     = 2
 }
 
 variable "company" {
@@ -59,13 +63,13 @@ variable "billing_code" {
 }
 
 variable "naming_prefix" {
-  type = string
-  default = "globo-web-app"
-  description = "naming prefix for resources"
+  type        = string
+  description = "Naming prefix for all resources."
+  default     = "globo-web-app"
 }
 
 variable "environment" {
-  type = string
-  default = "dev"
-  description = "environment"
+  type        = string
+  description = "Environment for deployment"
+  default     = "development"
 }

@@ -15,7 +15,7 @@ resource "aws_vpc" "app" {
   cidr_block           = var.vpc_cidr_block
   enable_dns_hostnames = var.enable_dns_hostnames
 
-  tags = local.common_tags
+  tags = merge(local.common_tags, {Name = "${local.naming_prefix}-vpc"})
 }
 
 resource "aws_internet_gateway" "app" {

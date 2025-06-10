@@ -9,7 +9,7 @@ resource "aws_instance" "nginx" {
   instance_type          = var.instance_type
   subnet_id              = module.app.public_subnets[(count.index % var.vpc_public_subnet_count)]
   vpc_security_group_ids = [aws_security_group.nginx_sg.id]
-  iam_instance_profile   = module.web_app_s3.instance_profile.name
+  iam_instance_profile   = module.web_app_s3.instance_profile
   depends_on             = [module.web_app_s3]
 
   user_data = templatefile("instance_startup_script.tpl", {

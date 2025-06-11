@@ -9,10 +9,10 @@ resource "aws_instance" "nginx" {
   instance_type          = var.instance_type
   subnet_id              = module.app.public_subnets[(count.index % var.vpc_public_subnet_count)]
   vpc_security_group_ids = [aws_security_group.nginx_sg.id]
-  iam_instance_profile   = module.web_app_s3.instance_profile.name
+  iam_instance_profile   = module.web_app_s3.instance_profile.id
   depends_on             = [module.web_app_s3]
 
-  user_data = templatefile("instance_startup_script.tpl", {
+  user_data = templatefile("./templates/instance_startup_script.tpl", {
     s3_bucket_name = module.web_app_s3.web_bucket.id
   })
 
@@ -21,3 +21,4 @@ resource "aws_instance" "nginx" {
     Name = "${local.naming_prefix}-nginx-${count.index}"
   })
 }
+
